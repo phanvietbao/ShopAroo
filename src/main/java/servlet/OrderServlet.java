@@ -14,6 +14,7 @@ import java.util.List;
 import dao.Database;
 import dao.DatabaseDAO;
 import dao.ProductDAO;
+import model.Order;
 import model.OrderDetailSession;
 import model.Product;
 
@@ -66,11 +67,12 @@ public class OrderServlet extends HttpServlet {
         }
         
     }
-    
+      
     private void createOrder(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        int productId = Integer.parseInt(request.getParameter("productId"));
+    	int productId = Integer.parseInt(request.getParameter("productId"));
         String productName = request.getParameter("productName");
-        double price = Double.parseDouble(request.getParameter("price"));
+        String image = request.getParameter("image");
+        int price = Integer.parseInt(request.getParameter("price"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         
         HttpSession session = request.getSession();
@@ -82,7 +84,7 @@ public class OrderServlet extends HttpServlet {
             orderDetailSessionList = (List<OrderDetailSession>) session.getAttribute("cart");
             for (OrderDetailSession ods : orderDetailSessionList) {
                 if(ods.getProductId() == productId){
-                    ods.setQuantity(ods.getQuantity() + quantity);
+ods.setQuantity(ods.getQuantity() + quantity);
                     isProductExist = true;
                     break;
                 }
@@ -100,7 +102,42 @@ public class OrderServlet extends HttpServlet {
         session.setAttribute("cart", orderDetailSessionList);
         response.sendRedirect("CartServlet");
     }
-
+    /*
+    private void createOrder(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    	int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String image = request.getParameter("image");
+        int price = Integer.parseInt(request.getParameter("price"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        
+        HttpSession session = request.getSession();
+        List<Product> PrList = null;
+        
+        boolean isProductExist = false;
+        if(session.getAttribute("cart") != null){
+            //Ton tai gio hang
+        	PrList = (List<Product>) session.getAttribute("cart");
+            for (Product ods : PrList) {
+                if(ods.getId() == id){
+                    ods.setQuantity(ods.getQuantity() + quantity);
+                    isProductExist = true;
+                    break;
+                }
+            }
+        }else{
+            //Gio hang chua ton tai
+        	PrList = new ArrayList<Product>();
+        }
+        
+        if(!isProductExist){
+            Product product = new Product(id, name, image, price, quantity);
+            PrList.add(product);
+        }
+        
+        session.setAttribute("cart", PrList);
+        response.sendRedirect("CartServlet");
+    }
+*/
     /**
      * Returns a short description of the servlet.
      *
@@ -125,8 +162,7 @@ public class OrderServlet extends HttpServlet {
                 }
             }
         }
-        
-        session.setAttribute("cart", orderDetailSessionList);
+session.setAttribute("cart", orderDetailSessionList);
         response.sendRedirect("CartServlet");
         
     }
