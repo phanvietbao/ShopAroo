@@ -127,7 +127,7 @@
               </select>
             </div>
             <div>
-            <form action="SearchServlet" method="GET" class="header-search">
+              <form action="SearchServlet" method="GET" class="header-search">
               <div class="input-group filter-bar-search">
                 <input type="text" name="name" placeholder="Search">
                 <div class="input-group-append">
@@ -135,7 +135,7 @@
                 </div>
               </div>
            </form>
-            </div>          
+            </div>
           </div>
           <!-- End Filter Bar -->
           <!-- Start Best Seller -->
